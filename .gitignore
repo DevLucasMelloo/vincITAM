@@ -1,0 +1,21 @@
+# Define quais arquivos e pastas o Git deve ignorar para não versionar dados sensíveis ou desnecessários.
+
+# Credenciais e configuração sensível
+config/database.php
+
+# Dependências externas (caso Composer seja adicionado futuramente)
+vendor/
+
+# Arquivos de sistema do Windows
+Thumbs.db
+desktop.ini
+
+# Arquivos de sistema do macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Arquivos de ambiente de IDEs
+.vscode/
+.idea/
