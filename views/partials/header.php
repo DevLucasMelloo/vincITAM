@@ -96,12 +96,6 @@
             width: 20px;
         }
 
-        #sidebar .sidebar-bottom {
-            margin-top: auto;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding: 10px 0;
-        }
-
         /* Topbar */
         #topbar {
             height: var(--topbar-height);
@@ -267,16 +261,6 @@
         </li>
     </ul>
 
-    <div class="sidebar-bottom">
-        <ul class="nav flex-column px-0">
-            <li class="nav-item">
-                <a href="#" class="nav-link"><i class="bi bi-gear"></i> Configurações</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link"><i class="bi bi-question-circle"></i> Suporte</a>
-            </li>
-        </ul>
-    </div>
 </nav>
 
 <!-- Topbar -->
