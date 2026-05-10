@@ -21,10 +21,14 @@ class AtivoController
         $this->servico = new AtivoService(new AtivoDAO($pdo));
     }
 
-    // Exibe a listagem de todos os ativos (GET /ativos)
+    // Exibe a listagem de todos os ativos com filtros opcionais por tipo e busca textual (GET /ativos)
     public function listar(): void
     {
-        $ativos = $this->servico->listarTodos();
+        $busca  = $_GET['busca']  ?? null;
+        $tipo   = $_GET['tipo']   ?? null;
+        $status = $_GET['status'] ?? null;
+
+        $ativos = $this->servico->listarTodos($tipo ?: null, $status ?: null, $busca ?: null);
 
         require __DIR__ . '/../views/ativos/lista.php';
     }

@@ -39,10 +39,14 @@ class AtivoService
         return $this->ativoDAO->salvar($ativo);
     }
 
-    // Retorna todos os ativos cadastrados
-    public function listarTodos(): array
+    // Retorna todos os ativos — aceita filtros opcionais por tipo, status e busca textual por nome/número de série (RF-006, RF-007)
+    public function listarTodos(?string $tipo = null, ?string $status = null, ?string $busca = null): array
     {
-        return $this->ativoDAO->buscarTodos();
+        $tipoFiltro   = ($tipo   && in_array($tipo,   self::TIPOS_VALIDOS,   strict: true)) ? $tipo   : null;
+        $statusFiltro = ($status && in_array($status, self::STATUS_VALIDOS,  strict: true)) ? $status : null;
+        $buscaFiltro  = ($busca  && strlen(trim($busca)) > 0) ? trim($busca) : null;
+
+        return $this->ativoDAO->buscarTodos($tipoFiltro, $statusFiltro, $buscaFiltro);
     }
 
     // Busca um ativo pelo id — lança exceção se não encontrado

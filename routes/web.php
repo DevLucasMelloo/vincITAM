@@ -13,6 +13,8 @@ return [
         '/vinculos'          => 'VinculoController@index',    // Listagem de todos os vínculos
         '/vinculos/novo'     => 'VinculoController@criar',    // Formulário de criação de vínculo
         '/vinculos/topologia'=> 'VinculoController@topologia',// Topologia de dependências de um ativo (?id=X)
+        '/relatorios'              => 'RelatorioController@index',       // Relatórios gerenciais (RF-007)
+        '/relatorios/exportar-csv' => 'RelatorioController@exportarCsv', // Exportação do inventário em CSV (RF-007)
     ],
     'POST' => [
         '/ativos/salvar'     => 'AtivoController@salvar',     // Cadastra novo ativo

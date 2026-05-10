@@ -64,7 +64,7 @@ class VinculoController
         $ativo    = $this->ativoServico->buscarPorId($id);
         $vinculos = $this->vinculoServico->obterTopologia($id);
 
-        require __DIR__ . '/../views/vinculos/index.php';
+        require __DIR__ . '/../views/vinculos/topologia.php';
     }
 
     // Remove um vínculo e redireciona para a listagem (POST /vinculos/deletar)

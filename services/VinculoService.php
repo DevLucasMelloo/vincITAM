@@ -60,6 +60,12 @@ class VinculoService
         return $this->vinculoDAO->buscarVinculosPorPai($idAtivoPai);
     }
 
+    // Retorna todos os vínculos indexados pelo id do ativo pai — usado no relatório CSV (RF-007)
+    public function listarIndexadosPorPai(): array
+    {
+        return $this->vinculoDAO->buscarTodosIndexadosPorPai();
+    }
+
     // Remove um vínculo pelo id
     public function deletar(int $id): bool
     {

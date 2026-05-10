@@ -31,14 +31,36 @@ class AtivoDAO
         ]);
     }
 
-    // Retorna todos os ativos cadastrados ordenados pelo nome
-    public function buscarTodos(): array
+    // Retorna todos os ativos ordenados pelo nome, com filtros opcionais por tipo, status e busca textual por nome ou número de série (RF-006, RF-007)
+    public function buscarTodos(?string $tipo = null, ?string $status = null, ?string $busca = null): array
     {
-        $stmt = $this->conexao->query("SELECT * FROM ativos ORDER BY nome ASC");
+        $where  = [];
+        $params = [];
+
+        if ($tipo !== null) {
+            $where[]        = 'tipo = :tipo';
+            $params['tipo'] = $tipo;
+        }
+
+        if ($status !== null) {
+            $where[]          = 'status = :status';
+            $params['status'] = $status;
+        }
+
+        if ($busca !== null) {
+            // LIKE com % nos dois lados — busca por nome OU número de série (RF-006)
+            $where[]          = '(nome LIKE :busca OR numero_serie LIKE :busca)';
+            $params['busca']  = '%' . $busca . '%';
+        }
+
+        $sql  = 'SELECT * FROM ativos';
+        $sql .= $where ? ' WHERE ' . implode(' AND ', $where) : '';
+        $sql .= ' ORDER BY nome ASC';
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->execute($params);
 
         $resultado = [];
-
-        // Converte cada linha do banco em um objeto AtivoModel
         while ($row = $stmt->fetch()) {
             $resultado[] = $this->mapearParaModel($row);
         }

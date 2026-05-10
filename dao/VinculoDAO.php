@@ -76,6 +76,26 @@ class VinculoDAO
         return $resultado;
     }
 
+    // Retorna todos os vínculos indexados pelo id do ativo pai — usado no relatório para exibir dependências por ativo (RF-007)
+    public function buscarTodosIndexadosPorPai(): array
+    {
+        $sql = "SELECT v.id_ativo_pai, v.tipo_relacao, filho.nome AS nome_ativo_filho
+                FROM vinculos v
+                INNER JOIN ativos filho ON filho.id = v.id_ativo_filho
+                ORDER BY v.id_ativo_pai, filho.nome ASC";
+
+        $stmt = $this->conexao->query($sql);
+
+        $resultado = [];
+
+        while ($row = $stmt->fetch()) {
+            $idPai = (int) $row['id_ativo_pai'];
+            $resultado[$idPai][] = $row['tipo_relacao'] . ': ' . $row['nome_ativo_filho'];
+        }
+
+        return $resultado; // Ex: [1 => ['Hospeda: Banco Oracle', 'Executa: Apache'], 2 => [...]]
+    }
+
     // Verifica se já existe um vínculo entre dois ativos — usado pelo Service para garantir unicidade (Regra de Negócio seção 7)
     public function vinculoJaExiste(int $idAtivoPai, int $idAtivoFilho): bool
     {
@@ -107,7 +127,9 @@ class VinculoDAO
             idAtivoPai:   (int) $row['id_ativo_pai'],
             idAtivoFilho: (int) $row['id_ativo_filho'],
             tipoRelacao:  $row['tipo_relacao'],
-            dataVinculo:  $row['data_vinculo']
+            dataVinculo:  $row['data_vinculo'],
+            nomePai:      $row['nome_ativo_pai']   ?? null, // Vem do JOIN — null se a query não trouxer o campo
+            nomeFilho:    $row['nome_ativo_filho'] ?? null
         );
     }
 }

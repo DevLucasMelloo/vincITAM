@@ -31,16 +31,14 @@ class DashboardController
         $ativos   = $this->ativoService->listarTodos();
         $vinculos = $this->vinculoService->listarTodos();
 
-        // Agrupa a contagem de ativos por tipo para exibir no dashboard
-        $totaisPorTipo = [
-            'servidor'          => 0,
-            'banco_de_dados'    => 0,
-            'dispositivo_rede'  => 0,
-            'estacao_trabalho'  => 0,
-        ];
+        // Agrupa a contagem por tipo e por status para exibir nos KPIs do dashboard
+        // Contadores separados: por tipo de ativo e por status — evita dupla contagem
+        $totaisPorTipo   = ['servidor' => 0, 'banco_de_dados' => 0, 'dispositivo_rede' => 0, 'estacao_trabalho' => 0];
+        $totaisPorStatus = ['ativo' => 0, 'manutencao' => 0, 'desativado' => 0];
 
         foreach ($ativos as $ativo) {
             $totaisPorTipo[$ativo->tipo]++;
+            $totaisPorStatus[$ativo->status]++;
         }
 
         $totalAtivos   = count($ativos);
