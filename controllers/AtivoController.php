@@ -40,7 +40,7 @@ class AtivoController
     {
         try {
             $this->servico->cadastrar($_POST);
-            header('Location: /vincitam/ativos?sucesso=cadastro');
+            header('Location: /vincitam/public/ativos?sucesso=cadastro');
         } catch (\InvalidArgumentException $e) {
             // Retorna ao formulário com a mensagem de erro de validação
             $erro = $e->getMessage();
@@ -56,8 +56,8 @@ class AtivoController
         try {
             $ativo = $this->servico->buscarPorId($id);
             require __DIR__ . '/../views/ativos/editar.php';
-        } catch (\RuntimeException $e) {
-            header('Location: /vincitam/ativos?erro=nao_encontrado');
+        } catch (\RuntimeException) {
+            header('Location: /vincitam/public/ativos?erro=nao_encontrado');
         }
     }
 
@@ -68,7 +68,7 @@ class AtivoController
 
         try {
             $this->servico->atualizar($id, $_POST);
-            header('Location: /vincitam/ativos?sucesso=edicao');
+            header('Location: /vincitam/public/ativos?sucesso=edicao');
         } catch (\InvalidArgumentException $e) {
             $erro  = $e->getMessage();
             $ativo = $this->servico->buscarPorId($id);
@@ -82,6 +82,6 @@ class AtivoController
         $id = (int) ($_POST['id'] ?? 0);
 
         $this->servico->deletar($id);
-        header('Location: /vincitam/ativos?sucesso=exclusao');
+        header('Location: /vincitam/public/ativos?sucesso=exclusao');
     }
 }

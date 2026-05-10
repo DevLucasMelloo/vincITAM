@@ -25,8 +25,8 @@ $rotas = require __DIR__ . '/../routes/web.php';
 $metodo = $_SERVER['REQUEST_METHOD'];
 $url    = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Remove o prefixo '/vincitam' da URL para funcionar no subdiretório do XAMPP
-$url = str_replace('/vincitam', '', $url) ?: '/';
+// Remove o prefixo '/vincitam/public' da URL para funcionar no subdiretório do XAMPP
+$url = str_replace('/vincitam/public', '', $url) ?: '/';
 
 // Verifica se a rota existe na tabela de rotas
 if (isset($rotas[$metodo][$url])) {

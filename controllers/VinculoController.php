@@ -48,7 +48,7 @@ class VinculoController
     {
         try {
             $this->vinculoServico->vincular($_POST);
-            header('Location: /vincitam/vinculos?sucesso=vinculo');
+            header('Location: /vincitam/public/vinculos?sucesso=vinculo');
         } catch (\InvalidArgumentException $e) {
             // Retorna ao formulário com a mensagem de erro de validação (hierarquia invertida, duplicidade, etc.)
             $erro   = $e->getMessage();
@@ -73,6 +73,6 @@ class VinculoController
         $id = (int) ($_POST['id'] ?? 0);
 
         $this->vinculoServico->deletar($id);
-        header('Location: /vincitam/vinculos?sucesso=exclusao');
+        header('Location: /vincitam/public/vinculos?sucesso=exclusao');
     }
 }
