@@ -48,9 +48,10 @@ class AtivoDAO
         }
 
         if ($busca !== null) {
-            // LIKE com % nos dois lados — busca por nome OU número de série (RF-006)
-            $where[]          = '(nome LIKE :busca OR numero_serie LIKE :busca)';
-            $params['busca']  = '%' . $busca . '%';
+            // Dois parâmetros distintos — PDO com EMULATE_PREPARES=false não aceita o mesmo nome duas vezes (RF-006)
+            $where[]               = '(nome LIKE :busca_nome OR numero_serie LIKE :busca_serie)';
+            $params['busca_nome']  = '%' . $busca . '%';
+            $params['busca_serie'] = '%' . $busca . '%';
         }
 
         $sql  = 'SELECT * FROM ativos';
