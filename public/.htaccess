@@ -1,0 +1,12 @@
+# Redireciona todas as requisições para o index.php (Front Controller), exceto arquivos e diretórios que existem fisicamente (CSS, JS, imagens).
+
+Options -Indexes
+
+RewriteEngine On
+
+# Se o arquivo físico existir (ex: CSS, JS), serve direto sem passar pelo PHP
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redireciona tudo para o index.php mantendo a query string (?id=X)
+RewriteRule ^ index.php [QSA,L]
