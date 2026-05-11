@@ -73,7 +73,7 @@ $labelStatus = [
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover mb-0">
+        <table class="table table-hover mb-0 sortable-table">
             <thead class="table-dark">
                 <tr>
                     <th class="ps-4">ID</th>
